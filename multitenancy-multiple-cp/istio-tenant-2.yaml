@@ -7233,12 +7233,12 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: istio-ingressgateway-service-account
-  namespace: istio-system
+  namespace: tenant-2
   labels:
     app: istio-ingressgateway
     istio: ingressgateway
     release: istio
-    istio.io/rev: default
+    istio.io/rev: tenant-2
     install.operator.istio.io/owning-resource: unknown
     operator.istio.io/component: "IngressGateways"
 ---
@@ -7246,7 +7246,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: istio-reader-service-account
-  namespace: istio-system
+  namespace: tenant-2
   labels:
     app: istio-reader
     release: istio
@@ -7254,8 +7254,8 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: istiod
-  namespace: istio-system
+  name: istiod-service-account
+  namespace: tenant-2
   labels:
     app: istiod
     release: istio
@@ -7263,8 +7263,8 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: istiod-service-account
-  namespace: istio-system
+  name: istiod-tenant-2
+  namespace: tenant-2
   labels:
     app: istiod
     release: istio
@@ -7272,7 +7272,7 @@ metadata:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: istio-reader-clusterrole-istio-system
+  name: istio-reader-clusterrole-tenant-2-tenant-2
   labels:
     app: istio-reader
     release: istio
@@ -7316,7 +7316,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: istio-reader-istio-system
+  name: istio-reader-tenant-2
   labels:
     app: istio-reader
     release: istio
@@ -7360,7 +7360,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: istiod-clusterrole-istio-system
+  name: istiod-clusterrole-tenant-2-tenant-2
   labels:
     app: istiod
     release: istio
@@ -7467,7 +7467,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: istiod-gateway-controller-istio-system
+  name: istiod-gateway-controller-tenant-2-tenant-2
   labels:
     app: istiod
     release: istio
@@ -7485,7 +7485,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: istiod-istio-system
+  name: istiod-tenant-2
   labels:
     app: istiod
     release: istio
@@ -7592,92 +7592,92 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: istio-reader-clusterrole-istio-system
+  name: istio-reader-clusterrole-tenant-2-tenant-2
   labels:
     app: istio-reader
     release: istio
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: istio-reader-clusterrole-istio-system
+  name: istio-reader-clusterrole-tenant-2-tenant-2
 subjects:
   - kind: ServiceAccount
     name: istio-reader-service-account
-    namespace: istio-system
+    namespace: tenant-2
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: istio-reader-istio-system
+  name: istio-reader-tenant-2
   labels:
     app: istio-reader
     release: istio
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: istio-reader-istio-system
+  name: istio-reader-tenant-2
 subjects:
   - kind: ServiceAccount
     name: istio-reader-service-account
-    namespace: istio-system
+    namespace: tenant-2
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: istiod-clusterrole-istio-system
+  name: istiod-clusterrole-tenant-2-tenant-2
   labels:
     app: istiod
     release: istio
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: istiod-clusterrole-istio-system
+  name: istiod-clusterrole-tenant-2-tenant-2
 subjects:
   - kind: ServiceAccount
-    name: istiod
-    namespace: istio-system
+    name: istiod-tenant-2
+    namespace: tenant-2
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: istiod-gateway-controller-istio-system
+  name: istiod-gateway-controller-tenant-2-tenant-2
   labels:
     app: istiod
     release: istio
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: istiod-gateway-controller-istio-system
+  name: istiod-gateway-controller-tenant-2-tenant-2
 subjects:
 - kind: ServiceAccount
-  name: istiod
-  namespace: istio-system
+  name: istiod-tenant-2
+  namespace: tenant-2
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: istiod-istio-system
+  name: istiod-tenant-2
   labels:
     app: istiod
     release: istio
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: istiod-istio-system
+  name: istiod-tenant-2
 subjects:
   - kind: ServiceAccount
     name: istiod-service-account
-    namespace: istio-system
+    namespace: tenant-2
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
-  name: istio-validator-istio-system
+  name: istio-validator-tenant-2-tenant-2
   labels:
     app: istiod
     release: istio
     istio: istiod
-    istio.io/rev: default
+    istio.io/rev: tenant-2
 webhooks:
   # Webhook handling per-revision validation. Mostly here so we can determine whether webhooks
   # are rejecting invalid configs on a per-revision basis.
@@ -7685,8 +7685,8 @@ webhooks:
     clientConfig:
       # Should change from base but cannot for API compat
       service:
-        name: istiod
-        namespace: istio-system
+        name: istiod-tenant-2
+        namespace: tenant-2
         path: "/validate"
     rules:
       - operations:
@@ -7712,15 +7712,15 @@ webhooks:
         - key: istio.io/rev
           operator: In
           values:
-          - "default"
+          - "tenant-2"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
-  name: stats-filter-1.16
-  namespace: istio-system
+  name: stats-filter-1.16-tenant-2
+  namespace: tenant-2
   labels:
-    istio.io/rev: default
+    istio.io/rev: tenant-2
 spec:
   priority: -1
   configPatches:
@@ -7832,10 +7832,10 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
-  name: stats-filter-1.17
-  namespace: istio-system
+  name: stats-filter-1.17-tenant-2
+  namespace: tenant-2
   labels:
-    istio.io/rev: default
+    istio.io/rev: tenant-2
 spec:
   priority: -1
   configPatches:
@@ -7907,10 +7907,10 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
-  name: stats-filter-1.18
-  namespace: istio-system
+  name: stats-filter-1.18-tenant-2
+  namespace: tenant-2
   labels:
-    istio.io/rev: default
+    istio.io/rev: tenant-2
 spec:
   priority: -1
   configPatches:
@@ -7982,10 +7982,10 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
-  name: tcp-stats-filter-1.16
-  namespace: istio-system
+  name: tcp-stats-filter-1.16-tenant-2
+  namespace: tenant-2
   labels:
-    istio.io/rev: default
+    istio.io/rev: tenant-2
 spec:
   priority: -1
   configPatches:
@@ -8089,10 +8089,10 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
-  name: tcp-stats-filter-1.17
-  namespace: istio-system
+  name: tcp-stats-filter-1.17-tenant-2
+  namespace: tenant-2
   labels:
-    istio.io/rev: default
+    istio.io/rev: tenant-2
 spec:
   priority: -1
   configPatches:
@@ -8154,10 +8154,10 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
-  name: tcp-stats-filter-1.18
-  namespace: istio-system
+  name: tcp-stats-filter-1.18-tenant-2
+  namespace: tenant-2
   labels:
-    istio.io/rev: default
+    istio.io/rev: tenant-2
 spec:
   priority: -1
   configPatches:
@@ -8219,37 +8219,10 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: istio
-  namespace: istio-system
+  name: istio-sidecar-injector-tenant-2
+  namespace: tenant-2
   labels:
-    istio.io/rev: default
-    install.operator.istio.io/owning-resource: unknown
-    operator.istio.io/component: "Pilot"
-    release: istio
-data:
-
-  # Configuration file for the mesh networks to be used by the Split Horizon EDS.
-  meshNetworks: |-
-    networks: {}
-
-  mesh: |-
-    defaultConfig:
-      discoveryAddress: istiod.istio-system.svc:15012
-      proxyMetadata: {}
-      tracing:
-        zipkin:
-          address: zipkin.istio-system:9411
-    enablePrometheusMerge: true
-    rootNamespace: istio-system
-    trustDomain: cluster.local
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: istio-sidecar-injector
-  namespace: istio-system
-  labels:
-    istio.io/rev: default
+    istio.io/rev: tenant-2
     install.operator.istio.io/owning-resource: unknown
     operator.istio.io/component: "Pilot"
     release: istio
@@ -8278,7 +8251,7 @@ data:
         "hub": "gcr.io/istio-testing",
         "imagePullPolicy": "",
         "imagePullSecrets": [],
-        "istioNamespace": "istio-system",
+        "istioNamespace": "tenant-2",
         "istiod": {
           "enableAnalysis": false
         },
@@ -8294,7 +8267,7 @@ data:
           "clusterName": "",
           "enabled": false
         },
-        "namespace": "istio-system",
+        "namespace": "tenant-2",
         "network": "",
         "omitSidecarInjectorConfigMap": false,
         "oneNamespace": false,
@@ -8366,7 +8339,7 @@ data:
       "istio_cni": {
         "enabled": false
       },
-      "revision": "",
+      "revision": "tenant-2",
       "sidecarInjectorWebhook": {
         "alwaysInjectSelector": [],
         "defaultTemplates": [],
@@ -10049,12 +10022,41 @@ data:
           type: {{ index .Annotations "networking.istio.io/service-type" | default "LoadBalancer" | quote }}
         ---
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: istio-tenant-2
+  namespace: tenant-2
+  labels:
+    istio.io/rev: tenant-2
+    install.operator.istio.io/owning-resource: unknown
+    operator.istio.io/component: "Pilot"
+    release: istio
+data:
+
+  # Configuration file for the mesh networks to be used by the Split Horizon EDS.
+  meshNetworks: |-
+    networks: {}
+
+  mesh: |-
+    defaultConfig:
+      discoveryAddress: istiod-tenant-2.tenant-2.svc:15012
+      proxyMetadata: {}
+      tracing:
+        zipkin:
+          address: zipkin.tenant-2:9411
+    enablePrometheusMerge: true
+    outboundTrafficPolicy:
+      mode: REGISTRY_ONLY
+    rootNamespace: tenant-2
+    trustDomain: cluster.local
+---
 apiVersion: admissionregistration.k8s.io/v1
 kind: MutatingWebhookConfiguration
 metadata:
-  name: istio-sidecar-injector
+  name: istio-sidecar-injector-tenant-2-tenant-2
   labels:
-    istio.io/rev: default
+    istio.io/rev: tenant-2
     install.operator.istio.io/owning-resource: unknown
     operator.istio.io/component: "Pilot"
     app: sidecar-injector
@@ -10063,8 +10065,8 @@ webhooks:
 - name: rev.namespace.sidecar-injector.istio.io
   clientConfig:
     service:
-      name: istiod
-      namespace: istio-system
+      name: istiod-tenant-2
+      namespace: tenant-2
       path: "/inject"
       port: 443
   sideEffects: None
@@ -10080,7 +10082,7 @@ webhooks:
     - key: istio.io/rev
       operator: In
       values:
-      - "default"
+      - "tenant-2"
     - key: istio-injection
       operator: DoesNotExist
   objectSelector:
@@ -10092,8 +10094,8 @@ webhooks:
 - name: rev.object.sidecar-injector.istio.io
   clientConfig:
     service:
-      name: istiod
-      namespace: istio-system
+      name: istiod-tenant-2
+      namespace: tenant-2
       path: "/inject"
       port: 443
   sideEffects: None
@@ -10119,74 +10121,18 @@ webhooks:
     - key: istio.io/rev
       operator: In
       values:
-      - "default"
-- name: namespace.sidecar-injector.istio.io
-  clientConfig:
-    service:
-      name: istiod
-      namespace: istio-system
-      path: "/inject"
-      port: 443
-  sideEffects: None
-  rules:
-  - operations: [ "CREATE" ]
-    apiGroups: [""]
-    apiVersions: ["v1"]
-    resources: ["pods"]
-  failurePolicy: Fail
-  admissionReviewVersions: ["v1beta1", "v1"]
-  namespaceSelector:
-    matchExpressions:
-    - key: istio-injection
-      operator: In
-      values:
-      - enabled
-  objectSelector:
-    matchExpressions:
-    - key: sidecar.istio.io/inject
-      operator: NotIn
-      values:
-      - "false"
-- name: object.sidecar-injector.istio.io
-  clientConfig:
-    service:
-      name: istiod
-      namespace: istio-system
-      path: "/inject"
-      port: 443
-  sideEffects: None
-  rules:
-  - operations: [ "CREATE" ]
-    apiGroups: [""]
-    apiVersions: ["v1"]
-    resources: ["pods"]
-  failurePolicy: Fail
-  admissionReviewVersions: ["v1beta1", "v1"]
-  namespaceSelector:
-    matchExpressions:
-    - key: istio-injection
-      operator: DoesNotExist
-    - key: istio.io/rev
-      operator: DoesNotExist
-  objectSelector:
-    matchExpressions:
-    - key: sidecar.istio.io/inject
-      operator: In
-      values:
-      - "true"
-    - key: istio.io/rev
-      operator: DoesNotExist
+      - "tenant-2"
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: istio-ingressgateway
-  namespace: istio-system
+  namespace: tenant-2
   labels:
     app: istio-ingressgateway
     istio: ingressgateway
     release: istio
-    istio.io/rev: default
+    istio.io/rev: tenant-2
     install.operator.istio.io/owning-resource: unknown
     operator.istio.io/component: "IngressGateways"
 spec:
@@ -10203,12 +10149,9 @@ spec:
       labels:
         app: istio-ingressgateway
         istio: ingressgateway
-        heritage: Tiller
-        release: istio
-        chart: gateways
         service.istio.io/canonical-name: istio-ingressgateway
-        service.istio.io/canonical-revision: latest
-        istio.io/rev: default
+        service.istio.io/canonical-revision: tenant-2
+        istio.io/rev: tenant-2
         install.operator.istio.io/owning-resource: unknown
         operator.istio.io/component: "IngressGateways"
         sidecar.istio.io/inject: "false"
@@ -10275,7 +10218,7 @@ spec:
           - name: PILOT_CERT_PROVIDER
             value: istiod
           - name: CA_ADDR
-            value: istiod.istio-system.svc:15012
+            value: istiod-tenant-2.tenant-2.svc:15012
           - name: NODE_NAME
             valueFrom:
               fieldRef:
@@ -10308,7 +10251,7 @@ spec:
           - name: ISTIO_META_WORKLOAD_NAME
             value: istio-ingressgateway
           - name: ISTIO_META_OWNER
-            value: kubernetes://apis/apps/v1/namespaces/istio-system/deployments/istio-ingressgateway
+            value: kubernetes://apis/apps/v1/namespaces/tenant-2/deployments/istio-ingressgateway
           - name: ISTIO_META_MESH_ID
             value: "cluster.local"
           - name: TRUST_DOMAIN
@@ -10379,7 +10322,7 @@ spec:
               audience: istio-ca
       - name: config-volume
         configMap:
-          name: istio
+          name: istio-tenant-2
           optional: true
       - name: ingressgateway-certs
         secret:
@@ -10397,176 +10340,175 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: istiod
-  namespace: istio-system
   labels:
     app: istiod
-    istio.io/rev: default
     install.operator.istio.io/owning-resource: unknown
-    operator.istio.io/component: "Pilot"
     istio: pilot
+    istio.io/rev: tenant-2
+    operator.istio.io/component: Pilot
     release: istio
+  name: istiod-tenant-2
+  namespace: tenant-2
 spec:
+  selector:
+    matchLabels:
+      app: istiod
+      istio.io/rev: tenant-2
   strategy:
     rollingUpdate:
       maxSurge: 100%
       maxUnavailable: 25%
-  selector:
-    matchLabels:
-      istio: pilot
   template:
     metadata:
-      labels:
-        app: istiod
-        istio.io/rev: default
-        install.operator.istio.io/owning-resource: unknown
-        sidecar.istio.io/inject: "false"
-        operator.istio.io/component: "Pilot"
-        istio: pilot
       annotations:
+        ambient.istio.io/redirection: disabled
         prometheus.io/port: "15014"
         prometheus.io/scrape: "true"
-        ambient.istio.io/redirection: disabled
+        sidecar.istio.io/inject: "false"
+      labels:
+        app: istiod
+        install.operator.istio.io/owning-resource: unknown
+        istio: istiod
+        istio.io/rev: tenant-2
+        operator.istio.io/component: Pilot
         sidecar.istio.io/inject: "false"
     spec:
-      serviceAccountName: istiod
+      containers:
+      - args:
+        - discovery
+        - --monitoringAddr=:15014
+        - --log_output_level=default:info
+        - --domain
+        - cluster.local
+        - --keepaliveMaxServerConnectionAge
+        - 30m
+        env:
+        - name: REVISION
+          value: tenant-2
+        - name: JWT_POLICY
+          value: third-party-jwt
+        - name: PILOT_CERT_PROVIDER
+          value: istiod
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: SERVICE_ACCOUNT
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: spec.serviceAccountName
+        - name: KUBECONFIG
+          value: /var/run/secrets/remote/config
+        - name: ENABLE_ENHANCED_RESOURCE_SCOPING
+          value: "true"
+        - name: PILOT_TRACE_SAMPLING
+          value: "1"
+        - name: PILOT_ENABLE_PROTOCOL_SNIFFING_FOR_OUTBOUND
+          value: "true"
+        - name: PILOT_ENABLE_PROTOCOL_SNIFFING_FOR_INBOUND
+          value: "true"
+        - name: ISTIOD_ADDR
+          value: istiod-tenant-2.tenant-2.svc:15012
+        - name: PILOT_ENABLE_ANALYSIS
+          value: "false"
+        - name: CLUSTER_ID
+          value: Kubernetes
+        image: gcr.io/istio-testing/pilot:1.18-alpha.f7393dd36802a2c40b4efe60895213de87badbf7
+        name: discovery
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        - containerPort: 15010
+          protocol: TCP
+        - containerPort: 15017
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 1
+          periodSeconds: 3
+          timeoutSeconds: 5
+        resources:
+          requests:
+            cpu: 500m
+            memory: 2048Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsGroup: 1337
+          runAsNonRoot: true
+          runAsUser: 1337
+        volumeMounts:
+        - mountPath: /var/run/secrets/tokens
+          name: istio-token
+          readOnly: true
+        - mountPath: /var/run/secrets/istio-dns
+          name: local-certs
+        - mountPath: /etc/cacerts
+          name: cacerts
+          readOnly: true
+        - mountPath: /var/run/secrets/remote
+          name: istio-kubeconfig
+          readOnly: true
+        - mountPath: /var/run/secrets/istiod/tls
+          name: istio-csr-dns-cert
+          readOnly: true
+        - mountPath: /var/run/secrets/istiod/ca
+          name: istio-csr-ca-configmap
+          readOnly: true
       securityContext:
         fsGroup: 1337
-      containers:
-        - name: discovery
-          image: "gcr.io/istio-testing/pilot:1.18-alpha.f7393dd36802a2c40b4efe60895213de87badbf7"
-          args:
-          - "discovery"
-          - --monitoringAddr=:15014
-          - --log_output_level=default:info
-          - --domain
-          - cluster.local
-          - --keepaliveMaxServerConnectionAge
-          - "30m"
-          ports:
-          - containerPort: 8080
-            protocol: TCP
-          - containerPort: 15010
-            protocol: TCP
-          - containerPort: 15017
-            protocol: TCP
-          readinessProbe:
-            httpGet:
-              path: /ready
-              port: 8080
-            initialDelaySeconds: 1
-            periodSeconds: 3
-            timeoutSeconds: 5
-          env:
-          - name: REVISION
-            value: "default"
-          - name: JWT_POLICY
-            value: third-party-jwt
-          - name: PILOT_CERT_PROVIDER
-            value: istiod
-          - name: POD_NAME
-            valueFrom:
-              fieldRef:
-                apiVersion: v1
-                fieldPath: metadata.name
-          - name: POD_NAMESPACE
-            valueFrom:
-              fieldRef:
-                apiVersion: v1
-                fieldPath: metadata.namespace
-          - name: SERVICE_ACCOUNT
-            valueFrom:
-              fieldRef:
-                apiVersion: v1
-                fieldPath: spec.serviceAccountName
-          - name: KUBECONFIG
-            value: /var/run/secrets/remote/config
-          - name: PILOT_TRACE_SAMPLING
-            value: "1"
-          - name: PILOT_ENABLE_PROTOCOL_SNIFFING_FOR_OUTBOUND
-            value: "true"
-          - name: PILOT_ENABLE_PROTOCOL_SNIFFING_FOR_INBOUND
-            value: "true"
-          - name: ISTIOD_ADDR
-            value: istiod.istio-system.svc:15012
-          - name: PILOT_ENABLE_ANALYSIS
-            value: "false"
-          - name: CLUSTER_ID
-            value: "Kubernetes"
-          resources:
-            requests:
-              cpu: 500m
-              memory: 2048Mi
-          securityContext:
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
-            runAsUser: 1337
-            runAsGroup: 1337
-            runAsNonRoot: true
-            capabilities:
-              drop:
-              - ALL
-          volumeMounts:
-          - name: istio-token
-            mountPath: /var/run/secrets/tokens
-            readOnly: true
-          - name: local-certs
-            mountPath: /var/run/secrets/istio-dns
-          - name: cacerts
-            mountPath: /etc/cacerts
-            readOnly: true
-          - name: istio-kubeconfig
-            mountPath: /var/run/secrets/remote
-            readOnly: true
-          - name: istio-csr-dns-cert
-            mountPath: /var/run/secrets/istiod/tls
-            readOnly: true
-          - name: istio-csr-ca-configmap
-            mountPath: /var/run/secrets/istiod/ca
-            readOnly: true
+      serviceAccountName: istiod-tenant-2
       volumes:
-      # Technically not needed on this pod - but it helps debugging/testing SDS
-      # Should be removed after everything works.
       - emptyDir:
           medium: Memory
         name: local-certs
       - name: istio-token
         projected:
           sources:
-            - serviceAccountToken:
-                audience: istio-ca
-                expirationSeconds: 43200
-                path: istio-token
-      # Optional: user-generated root
+          - serviceAccountToken:
+              audience: istio-ca
+              expirationSeconds: 43200
+              path: istio-token
       - name: cacerts
         secret:
-          secretName: cacerts
           optional: true
+          secretName: cacerts
       - name: istio-kubeconfig
         secret:
-          secretName: istio-kubeconfig
           optional: true
-      # Optional: istio-csr dns pilot certs
+          secretName: istio-kubeconfig
       - name: istio-csr-dns-cert
         secret:
+          optional: true
           secretName: istiod-tls
-          optional: true
-      - name: istio-csr-ca-configmap
-        configMap:
-          name: istio-ca-root-cert
+      - configMap:
           defaultMode: 420
+          name: istio-ca-root-cert
           optional: true
+        name: istio-csr-ca-configmap
 ---
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
   name: istio-ingressgateway
-  namespace: istio-system
+  namespace: tenant-2
   labels:
     app: istio-ingressgateway
     istio: ingressgateway
     release: istio
-    istio.io/rev: default
+    istio.io/rev: tenant-2
     install.operator.istio.io/owning-resource: unknown
     operator.istio.io/component: "IngressGateways"
 spec:
@@ -10579,11 +10521,11 @@ spec:
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  name: istiod
-  namespace: istio-system
+  name: istiod-tenant-2
+  namespace: tenant-2
   labels:
     app: istiod
-    istio.io/rev: default
+    istio.io/rev: tenant-2
     install.operator.istio.io/owning-resource: unknown
     operator.istio.io/component: "Pilot"
     release: istio
@@ -10593,16 +10535,16 @@ spec:
   selector:
     matchLabels:
       app: istiod
-      istio: pilot
+      istio.io/rev: tenant-2
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: istio-ingressgateway-sds
-  namespace: istio-system
+  namespace: tenant-2
   labels:
     release: istio
-    istio.io/rev: default
+    istio.io/rev: tenant-2
     install.operator.istio.io/owning-resource: unknown
     operator.istio.io/component: "IngressGateways"
 rules:
@@ -10613,8 +10555,26 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: istiod
-  namespace: istio-system
+  name: istiod-tenant-2
+  namespace: tenant-2
+  labels:
+    app: istiod
+    release: istio
+rules:
+- apiGroups: ["networking.istio.io"]
+  verbs: ["create"]
+  resources: ["gateways"]
+
+- apiGroups: [""]
+  resources: ["secrets"]
+  # TODO lock this down to istio-ca-cert if not using the DNS cert mesh config
+  verbs: ["create", "get", "watch", "list", "update", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: istiod-tenant-2
+  namespace: tenant-2
   labels:
     app: istiod
     release: istio
@@ -10633,31 +10593,13 @@ rules:
   verbs: ["delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  name: istiod-istio-system
-  namespace: istio-system
-  labels:
-    app: istiod
-    release: istio
-rules:
-- apiGroups: ["networking.istio.io"]
-  verbs: ["create"]
-  resources: ["gateways"]
-
-- apiGroups: [""]
-  resources: ["secrets"]
-  # TODO lock this down to istio-ca-cert if not using the DNS cert mesh config
-  verbs: ["create", "get", "watch", "list", "update", "delete"]
----
-apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: istio-ingressgateway-sds
-  namespace: istio-system
+  namespace: tenant-2
   labels:
     release: istio
-    istio.io/rev: default
+    istio.io/rev: tenant-2
     install.operator.istio.io/owning-resource: unknown
     operator.istio.io/component: "IngressGateways"
 roleRef:
@@ -10671,47 +10613,47 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: istiod
-  namespace: istio-system
+  name: istiod-tenant-2
+  namespace: tenant-2
   labels:
     app: istiod
     release: istio
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: istiod
+  name: istiod-tenant-2
 subjects:
   - kind: ServiceAccount
-    name: istiod
-    namespace: istio-system
+    name: istiod-tenant-2
+    namespace: tenant-2
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: istiod-istio-system
-  namespace: istio-system
+  name: istiod-tenant-2
+  namespace: tenant-2
   labels:
     app: istiod
     release: istio
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: istiod-istio-system
+  name: istiod-tenant-2
 subjects:
   - kind: ServiceAccount
     name: istiod-service-account
-    namespace: istio-system
+    namespace: tenant-2
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: istio-ingressgateway
-  namespace: istio-system
+  namespace: tenant-2
   labels:
     app: istio-ingressgateway
     istio: ingressgateway
     release: istio
-    istio.io/rev: default
+    istio.io/rev: tenant-2
     install.operator.istio.io/owning-resource: unknown
     operator.istio.io/component: "IngressGateways"
 spec:
@@ -10732,12 +10674,12 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: istiod
-  namespace: istio-system
+  name: istiod-tenant-2
+  namespace: tenant-2
   labels:
     app: istiod
     release: istio
-    istio.io/rev: default
+    istio.io/rev: tenant-2
     install.operator.istio.io/owning-resource: unknown
     operator.istio.io/component: "Pilot"
 spec:
@@ -10746,7 +10688,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: istiod
+    name: istiod-tenant-2
   metrics:
   - type: Resource
     resource:
@@ -10759,13 +10701,13 @@ apiVersion: v1
 kind: Service
 metadata:
   name: istio-ingressgateway
-  namespace: istio-system
+  namespace: tenant-2
   annotations:
   labels:
     app: istio-ingressgateway
     istio: ingressgateway
     release: istio
-    istio.io/rev: default
+    istio.io/rev: tenant-2
     install.operator.istio.io/owning-resource: unknown
     operator.istio.io/component: "IngressGateways"
 spec:
@@ -10793,10 +10735,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: istiod
-  namespace: istio-system
+  name: istiod-tenant-2
+  namespace: tenant-2
   labels:
-    istio.io/rev: default
+    istio.io/rev: tenant-2
     install.operator.istio.io/owning-resource: unknown
     operator.istio.io/component: "Pilot"
     app: istiod
@@ -10819,7 +10761,5 @@ spec:
       protocol: TCP
   selector:
     app: istiod
-    # Label used by the 'default' service. For versioned deployments we match with app and version.
-    # This avoids default deployment picking the canary
-    istio: pilot
+    istio.io/rev: tenant-2
 ---
