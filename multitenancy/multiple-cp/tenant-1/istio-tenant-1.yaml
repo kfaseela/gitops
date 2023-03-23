@@ -10315,24 +10315,6 @@ rules:
   verbs: ["delete"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  name: istiod-tenant-1
-  namespace: tenant-1
-  labels:
-    app: istiod
-    release: istio
-rules:
-- apiGroups: ["networking.istio.io"]
-  verbs: ["create"]
-  resources: ["gateways"]
-
-- apiGroups: [""]
-  resources: ["secrets"]
-  # TODO lock this down to istio-ca-cert if not using the DNS cert mesh config
-  verbs: ["create", "get", "watch", "list", "update", "delete"]
----
-apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: istiod-tenant-1
@@ -10348,20 +10330,6 @@ subjects:
   - kind: ServiceAccount
     name: istiod-tenant-1
     namespace: tenant-1
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: istiod-tenant-1
-  namespace: tenant-1
-  labels:
-    app: istiod
-    release: istio
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: istiod-tenant-1
-subjects:
   - kind: ServiceAccount
     name: istiod-service-account
     namespace: tenant-1
