@@ -10391,3 +10391,11 @@ spec:
     app: istiod
     istio.io/rev: tenant-2
 ---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: "tenant-2-peerauth"
+  namespace: "tenant-2"
+spec:
+  mtls:
+    mode: STRICT
