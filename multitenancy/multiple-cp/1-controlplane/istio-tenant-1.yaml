@@ -1,3 +1,14 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    istio.io/rev: tenant-1
+    usergroup: tenant-1
+  name: tenant-1
+spec:
+  finalizers:
+  - kubernetes
+---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
