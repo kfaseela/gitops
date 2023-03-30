@@ -1,0 +1,14 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: web-api-vs
+  namespace: web-api-ns
+spec:
+  hosts:
+  - "istioinaction.io"
+  gateways:
+  - istio-system/web-api-gateway
+  http:
+  - route:
+    - destination:
+        host: web-api.web-api-ns.svc.cluster.local

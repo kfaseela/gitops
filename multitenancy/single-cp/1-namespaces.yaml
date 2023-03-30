@@ -1,0 +1,33 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Namespace
+  metadata:
+    labels:
+      istio-injection: enabled
+    name: purchase-history-ns
+  spec:
+    finalizers:
+    - kubernetes
+- apiVersion: v1
+  kind: Namespace
+  metadata:
+    labels:
+      istio-injection: enabled
+    name: recommendation-ns
+  spec:
+    finalizers:
+    - kubernetes
+- apiVersion: v1
+  kind: Namespace
+  metadata:
+    labels:
+      istio-injection: enabled
+    name: web-api-ns
+  spec:
+    finalizers:
+    - kubernetes
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
